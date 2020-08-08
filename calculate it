@@ -1,0 +1,147 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Yenideneme
+{
+    class Calculate
+    {
+
+        static void Main(string[] args)
+        {
+            
+            string second;
+            int i = 1;
+            double[] num1 = new double[i];
+            double[] num2 = new double[i];
+            string[] trans = new string[i];
+            double[] results = new double[i];
+
+
+
+            Console.WriteLine("Welcome \n");
+            Console.WriteLine(        "Addition:  \" + \" \n " +
+                                      "Substraction: \" - \" \n " +
+                                      "Multiplication: \" * \" \n " +
+                                      "Division: \" / \"  ");
+
+            Console.WriteLine("Use \" h \" for show previous transactions before do any transactions. \n " +
+                "You should use \" c \" for clear the console \n " +
+                " \"e \" for exit. \n " +
+                "\" r \" for reverse the previous transactions and write them to console \n" +
+                "\" p \" for show the previous transactions into to Transactions.txt \n ");
+            
+            Console.WriteLine("Enter any key to continue");
+            string ilk = Console.ReadLine();
+            switch(ilk)
+            {
+                case "c":
+                    Console.Clear();
+                    break;
+                case "h":
+                    if (i == 1)
+                        Console.WriteLine("Did not any transaction");
+                    break;
+            }
+
+            do
+            {
+                    Array.Resize(ref num1, i);
+                    Array.Resize(ref num2, i);
+                    Array.Resize(ref trans, i);
+                    Array.Resize(ref results, i);
+
+                    Console.WriteLine("Enter the first number");
+                    num1[i - 1] = Convert.ToInt32(Console.ReadLine());
+
+
+                    Console.WriteLine("Enter one of the four transactions.");
+                    trans[i - 1] =Console.ReadLine();
+
+
+                    Console.WriteLine("Enter the second number");
+                    num2[i - 1] = Convert.ToInt32(Console.ReadLine());
+                string trans1 = trans[i - 1];
+                switch (trans1)
+                    {
+                        case "+":
+
+                            results[i - 1] = num1[i - 1] + num2[i - 1];
+                            Console.WriteLine(num1[i - 1] + trans1 + num2[i - 1] + "= " + results[i - 1]);
+
+                            break;
+                        case "-":
+
+                            results[i - 1] = num1[i - 1] - num2[i - 1];
+                            Console.WriteLine(num1[i - 1] + trans[i - 1] + num2[i - 1] + "= " + results[i - 1]);
+                            break;
+
+                        case "*":
+
+                            results[i - 1] = num1[i - 1] * num2[i - 1];
+                            Console.WriteLine(num1[i - 1] + trans[i - 1] + num2[i - 1] + "= " + results[i - 1]);
+                            break;
+
+                        case "/":
+
+                            results[i - 1] = num1[i - 1] / num2[i - 1];
+                            Console.WriteLine(num1[i - 1] + trans[i - 1] + num2[i - 1] + "= " + results[i - 1]);
+                            break;
+
+                            default:
+                            Console.WriteLine("You should enter only one of the 4 transactions! \" +, -, *, / \" ");
+                            break;
+
+                    }
+                    Console.WriteLine("Press any key to continue. ");
+
+                    second = Console.ReadLine();
+                    switch (second)
+                    {
+                        case "c":
+                            Console.Clear();
+                            break;
+
+                        case "r":
+                        
+                        for (int rev=i; rev>0; rev-- )
+                        {
+                            Console.WriteLine(num1[rev] + trans[rev] + num2[rev] + "=" + results[rev]);
+                        }
+                        break;
+
+                        case "h":
+                                for (int a = 0; a < i; a++)
+                                {
+                                    Console.WriteLine(num1[a] + trans[a] + num2[a] + "=" + results[a]);
+                            Console.WriteLine();
+                            Console.WriteLine("Would you like to write them to named Transactions txt file? \n" +
+                                "If you, please enter \" y \" and you can find it from your desktop. \" Transactions.txt \" ");
+                            Console.WriteLine("Enter any key to continue...");
+                            string finallyy= Console.ReadLine();
+                            if (finallyy == "y")
+                            {
+                                string filePath = @"C:\Users\Kendim\Desktop\Transactions.txt";
+
+                                FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+                                StreamWriter sw = new StreamWriter(fs);
+                                for (int f = 0; f < i; f++)
+                                {
+                                    sw.WriteLine((num1[f] + trans[f] + num2[f] + "=" + results[f]));
+                                }
+                                sw.Flush();
+                                sw.Close();
+                                fs.Close();
+                            }
+                                }
+                            break;
+                    }
+                    i++;
+                
+            } while (second != "e");
+        }
+    }
+}
